@@ -6,7 +6,5 @@ import { d } from "../utils";
  * Note: the line breaks is important here
  */
 export const spanBreak = (children: string) => d/*html*/ `
-  </span>
   ${children}
-  <span>
 `;

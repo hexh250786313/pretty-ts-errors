@@ -1,6 +1,5 @@
+import { prettierIt } from "./prettier";
 import { d } from "../utils";
-import { miniLine } from "./miniLine";
-import { spanBreak } from "./spanBreak";
 
 /**
  * @returns markdown string that will be rendered as a code block (`supportHtml` required)
@@ -8,16 +7,19 @@ import { spanBreak } from "./spanBreak";
  * and have a background color in hovers due to strict sanitization of markdown on
  * VSCode [code](https://github.com/microsoft/vscode/blob/735aff6d962db49423e02c2344e60d418273ae39/src/vs/base/browser/markdownRenderer.ts#L372)
  */
-const codeBlock = (code: string, language: string) =>
-  spanBreak(d/*html*/ `
-  <span class="codicon codicon-none" style="background-color:var(--vscode-textCodeBlock-background);">
+const codeBlock = (code: string, language: string) => {
+  const prettiered = prettierIt(code);
+  if (!prettiered.includes("\n")) {
+    return `\`${prettiered}\``;
+  }
+  return d/*html*/ `
 
-    \`\`\`${language}
-    ${code}
+    \`\`\`${language === "type" ? "typescript" : language}
+    ${prettiered}
     \`\`\`
 
-  </span>
-`);
+  `;
+};
 
 export const inlineCodeBlock = (code: string, language: string) =>
   codeBlock(` ${code} `, language);
@@ -34,9 +36,7 @@ export const multiLineCodeBlock = (code: string, language: string) => {
     .map((line) => line.padEnd(maxLineChars + 2))
     .join("\n");
 
-  return d/*html*/ `    
-    ${miniLine}
+  return d/*html*/ `
     ${codeBlock(paddedCode, language)}
-    ${miniLine}
     `;
 };

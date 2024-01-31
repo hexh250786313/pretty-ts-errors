@@ -1,39 +1,54 @@
 import { Diagnostic } from "vscode-languageserver-types";
-import { compressToEncodedURIComponent, d } from "../utils";
+import { compressToEncodedURIComponent } from "../utils";
 import { KNOWN_ERROR_NUMBERS } from "./consts/knownErrorNumbers";
-import { miniLine } from "./miniLine";
 
-export const title = (diagnostic: Diagnostic) => d/*html*/ `
-    <span style="color:#f96363;">⚠ Error </span>${
-      typeof diagnostic.code === "number"
-        ? d/*html*/ `
-            <span style="color:#5f5f5f;">
-            (TS${diagnostic.code}) 
-            ${errorCodeExplanationLink(diagnostic.code)}  | 
-            ${errorMessageTranslationLink(diagnostic.message)}
-            </span>
-          `
-        : ""
-    }
-    <br>
-    ${miniLine}
-`;
+const getDiagnosticSeverity = (diagnostic: Diagnostic) => {
+  switch (diagnostic.severity) {
+    case 4:
+      return "Hint";
+    case 3:
+      return "Info";
+    case 2:
+      return "Warning";
+    case 1:
+      return "Error";
+    default:
+      return "Error";
+  }
+};
+
+const getDiagnosticIcon = (diagnostic: Diagnostic) => {
+  switch (diagnostic.severity) {
+    case 4:
+      return "🟢";
+    case 3:
+      return "🔵";
+    case 2:
+      return "🟠";
+    case 1:
+      return "🔴";
+    default:
+      return "🔴";
+  }
+};
+
+export const title = (diagnostic: Diagnostic) => {
+  let title = "";
+  const severity = getDiagnosticSeverity(diagnostic);
+  const icon = getDiagnosticIcon(diagnostic);
+  const code =
+    typeof diagnostic.code === "number" ? `(TS${diagnostic.code})` : "";
+  title = `${icon} ${severity} ${code}`;
+  return title;
+};
 
 export const errorCodeExplanationLink = (errorCode: Diagnostic["code"]) =>
   KNOWN_ERROR_NUMBERS.has(errorCode)
-    ? d/*html*/ `
-        <a title="See detailed explanation" href="https://typescript.tv/errors/#ts${errorCode}">
-          <span class="codicon codicon-link-external">
-          </span>
-        </a>`
+    ? `\n*@see* — [Code Explanation Link](https://typescript.tv/errors/#ts${errorCode})`
     : "";
 
 export const errorMessageTranslationLink = (message: Diagnostic["message"]) => {
   const encodedMessage = compressToEncodedURIComponent(message);
 
-  return d/*html*/ `
-    <a title="See translation" href="https://ts-error-translator.vercel.app/?error=${encodedMessage}">
-      <span class="codicon codicon-globe">
-      </span>
-    </a>`;
+  return `\n*@see* — [Message Translation Link](https://ts-error-translator.vercel.app/?error=${encodedMessage})`;
 };

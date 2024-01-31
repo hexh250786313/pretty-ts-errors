@@ -1,20 +1,28 @@
 import { Diagnostic } from "vscode-languageserver-types";
-import { title } from "../components";
+import {
+  errorCodeExplanationLink,
+  errorMessageTranslationLink,
+  miniLine,
+  title,
+} from "../components";
 import { d } from "../utils";
-import { embedSymbolLinks } from "./embedSymbolLinks";
 import { formatDiagnosticMessage } from "./formatDiagnosticMessage";
-import { identSentences } from "./identSentences";
+import { markdownIndent, identSentences } from "./identSentences";
 
 export function formatDiagnostic(
   diagnostic: Diagnostic,
-  format: (type: string) => string
+  format: (type: string) => string = (type) => type
 ) {
-  const newDiagnostic = embedSymbolLinks(diagnostic);
+  const newDiagnostic = diagnostic;
 
-  return d/*html*/ `
+  const result = d/*html*/ `
     ${title(diagnostic)}
-    <span>
-    ${formatDiagnosticMessage(identSentences(newDiagnostic.message), format)}
-    </span>
+    ${miniLine}
+    ${markdownIndent(
+      formatDiagnosticMessage(identSentences(newDiagnostic.message), format)
+    )}
+    ${errorMessageTranslationLink(diagnostic.message)}
+    ${errorCodeExplanationLink(diagnostic.code)}
   `;
+  return result;
 }
