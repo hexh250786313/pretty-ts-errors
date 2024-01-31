@@ -1,9 +1,9 @@
 {
-  "name": "pretty-ts-errors",
+  "name": "pretty-ts-errors-ansi",
   "displayName": "Pretty TypeScript Errors",
-  "publisher": "YoavBls",
+  "publisher": "hexh <250786313@qq.com>",
   "description": "Make TypeScript errors prettier and more human-readable in VSCode",
-  "version": "0.5.3",
+  "version": "0.0.1",
   "icon": "assets/icon.png",
   "repository": {
     "type": "git",
@@ -13,84 +13,27 @@
   "sponsor": {
     "url": "https://github.com/sponsors/yoavbls"
   },
-  "engines": {
-    "vscode": "^1.77.0"
-  },
-  "categories": [
-    "Programming Languages",
-    "Debuggers",
-    "Visualization",
-    "Other"
-  ],
-  "galleryBanner": {
-    "color": "#133b55",
-    "theme": "dark"
-  },
-  "activationEvents": [
-    "onLanguage:typescript",
-    "onLanguage:javascript",
-    "onLanguage:typescriptreact",
-    "onLanguage:javascriptreact",
-    "onLanguage:astro",
-    "onLanguage:svelte",
-    "onLanguage:vue",
-    "onLanguage:mdx",
-    "onLanguage:glimmer-js",
-    "onLanguage:glimmer-ts"
-  ],
-  "main": "./dist/extension.js",
-  "browser": "./dist/extension.js",
-  "contributes": {
-    "languages": [
-      {
-        "id": "type",
-        "extensions": [
-          ".type"
-        ]
-      }
-    ],
-    "grammars": [
-      {
-        "language": "type",
-        "scopeName": "source.type",
-        "path": "./syntaxes/type.tmGrammar.json"
-      }
-    ]
-  },
+  "main": "build",
   "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "node scripts/build",
-    "watch": "npm run compile -- --watch",
-    "build": "vsce package",
-    "package": "node scripts/build -- --production",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "npm run compile-tests && npm run compile && npm run lint",
-    "lint": "eslint src --ext ts & tsc --noEmit",
-    "test": "node ./out/test/runTest.js"
+    "build": "node scripts/build -- --production",
+    "start": "node scripts/build -- --watch"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0",
     "@types/lz-string": "^1.5.0",
-    "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
     "@types/prettier": "^2.7.3",
-    "@types/vscode": "^1.70.0",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
-    "@vscode/test-electron": "^2.3.3",
+    "chokidar": "^3.5.3",
     "esbuild": "^0.18.17",
     "eslint": "^8.46.0",
-    "glob": "^8.1.0",
-    "mocha": "^10.2.0",
-    "path-browserify": "^1.0.1",
+    "rimraf": "^5.0.5",
     "typescript": "^5.1.6"
   },
   "dependencies": {
     "lz-string": "^1.5.0",
     "prettier": "^2.8.8",
     "ts-dedent": "^2.2.0",
-    "vscode-languageclient": "^8.1.0",
     "vscode-languageserver-types": "^3.17.3",
     "vscode-uri": "^3.0.7"
   }
