@@ -1,5 +1,4 @@
 import { d } from "../utils";
-import { miniLine } from "./miniLine";
 import { spanBreak } from "./spanBreak";
 
 /**
@@ -9,18 +8,20 @@ import { spanBreak } from "./spanBreak";
  * VSCode [code](https://github.com/microsoft/vscode/blob/735aff6d962db49423e02c2344e60d418273ae39/src/vs/base/browser/markdownRenderer.ts#L372)
  */
 const codeBlock = (code: string, language: string) =>
-  spanBreak(d/*html*/ `
-  <span class="codicon codicon-none" style="background-color:var(--vscode-textCodeBlock-background);">
+  language === "type"
+    ? spanBreak(d/*html*/ `\u001b[0m\u001b[31m\u001b[1m${code}\u001b[0m`)
+    : d/*html*/ `
 
     \`\`\`${language}
     ${code}
     \`\`\`
 
-  </span>
-`);
+  `;
 
 export const inlineCodeBlock = (code: string, language: string) =>
-  codeBlock(` ${code} `, language);
+  code.includes("\n")
+    ? codeBlock(` ${code} `, language)
+    : codeBlock(` ${code} `, "type");
 
 export const multiLineCodeBlock = (code: string, language: string) => {
   const codeLines = code.split("\n");
@@ -34,9 +35,7 @@ export const multiLineCodeBlock = (code: string, language: string) => {
     .map((line) => line.padEnd(maxLineChars + 2))
     .join("\n");
 
-  return d/*html*/ `    
-    ${miniLine}
+  return d/*html*/ `
     ${codeBlock(paddedCode, language)}
-    ${miniLine}
     `;
 };

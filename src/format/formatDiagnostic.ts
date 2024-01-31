@@ -13,8 +13,6 @@ export function formatDiagnostic(
 
   return d/*html*/ `
     ${title(diagnostic)}
-    <span>
     ${formatDiagnosticMessage(identSentences(newDiagnostic.message), format)}
-    </span>
   `;
 }

@@ -25,11 +25,11 @@ export const formatDiagnosticMessage = (
     .replaceAll(
       /(is missing the following properties from type\s?)'(.*)': ((?:\w+, )*(?:(?!and)\w+)?)/g,
       (_, pre, type, post) =>
-        `${pre}${formatTypeBlock("", type, format)}: <ul>${post
+        `${pre}${formatTypeBlock("", type, format)}: \n${post
           .split(", ")
           .filter(Boolean)
-          .map((prop: string) => `<li>${prop}</li>`)
-          .join("")}</ul>`
+          .map((prop: string) => `- ${prop}\n`)
+          .join("")}`
     )
     // Format type pairs
     .replaceAll(
