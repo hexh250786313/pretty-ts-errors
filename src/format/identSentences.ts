@@ -38,15 +38,12 @@ export const identAll = (message: string): string => {
       return lines
         .split("\n")
         .map((line, index, self) => {
-          if (line.startsWith("```")) {
-            return line;
-          }
-          if (index === 0) {
+          if (index === 0 || line.startsWith("```")) {
             return line;
           }
           // last one
           if (index === self.length - 1) {
-            return "." + "\u0020".repeat(spaces - 1) + line;
+            return "." + "\u0020".repeat(spaces - 1) + line.trim();
           }
           return `${"\u0020".repeat(spaces)}${line}`;
         })
