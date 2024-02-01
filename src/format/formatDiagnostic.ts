@@ -1,13 +1,9 @@
 import { Diagnostic } from "vscode-languageserver-types";
-import {
-  errorCodeExplanationLink,
-  errorMessageTranslationLink,
-  title,
-} from "../components";
+import { miniLine, title } from "../components";
 import { d } from "../utils";
-import { embedSymbolLinks } from "./embedSymbolLinks";
 import { formatDiagnosticMessage } from "./formatDiagnosticMessage";
 import { identAll, identSentences } from "./identSentences";
+import fs from "fs";
 
 export function formatDiagnostic(
   diagnostic: Diagnostic,
@@ -15,12 +11,16 @@ export function formatDiagnostic(
 ) {
   const newDiagnostic = diagnostic;
 
-  return d/*html*/ `
+  const result = d/*html*/ `
     ${title(diagnostic)}
+    ${miniLine}
     ${identAll(
       formatDiagnosticMessage(identSentences(newDiagnostic.message), format)
     )}
   `;
+  // 写入 /home/hexh/Desktop/text.md
+  fs.writeFileSync("/home/hexh/Desktop/text.md", result);
+  return result;
 }
 
 //

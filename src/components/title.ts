@@ -1,20 +1,46 @@
 import { Diagnostic } from "vscode-languageserver-types";
-import { compressToEncodedURIComponent, d } from "../utils";
+import { compressToEncodedURIComponent } from "../utils";
 import { KNOWN_ERROR_NUMBERS } from "./consts/knownErrorNumbers";
-import { miniLine } from "./miniLine";
 
-// @todo
-export const title = (diagnostic: Diagnostic) => d/*html*/ `
-    \u001b[31m⚠ Error \u001b[0m${
-      typeof diagnostic.code === "number"
-        ? d/*html*/ `
-            \u001b[31m(TS${diagnostic.code})\u001b[0m
-          `
-        : ""
-    }
-    \n
-    ${miniLine}
-`;
+const getDiagnosticSeverity = (diagnostic: Diagnostic) => {
+  switch (diagnostic.severity) {
+    case 4:
+      return "Hint";
+    case 3:
+      return "Info";
+    case 2:
+      return "Warning";
+    case 1:
+      return "Error";
+    default:
+      return "Error";
+  }
+};
+
+const getDiagnosticIcon = (diagnostic: Diagnostic) => {
+  switch (diagnostic.severity) {
+    case 4:
+      return "🟢";
+    case 3:
+      return "🔵";
+    case 2:
+      return "🟠";
+    case 1:
+      return "🔴";
+    default:
+      return "🔴";
+  }
+};
+
+export const title = (diagnostic: Diagnostic) => {
+  let title = "";
+  const severity = getDiagnosticSeverity(diagnostic);
+  const icon = getDiagnosticIcon(diagnostic);
+  const code =
+    typeof diagnostic.code === "number" ? `(TS${diagnostic.code})` : "";
+  title = `${icon} ${severity} ${code}`;
+  return title;
+};
 
 export const errorCodeExplanationLink = (errorCode: Diagnostic["code"]) =>
   KNOWN_ERROR_NUMBERS.has(errorCode)

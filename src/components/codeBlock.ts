@@ -7,16 +7,27 @@ import { d } from "../utils";
  * and have a background color in hovers due to strict sanitization of markdown on
  * VSCode [code](https://github.com/microsoft/vscode/blob/735aff6d962db49423e02c2344e60d418273ae39/src/vs/base/browser/markdownRenderer.ts#L372)
  */
-const codeBlock = (code: string, language: string) =>
-  language === "type"
-    ? prettierIt(code)
-    : d/*html*/ `
+const codeBlock = (code: string, language: string) => {
+  const prettiered = prettierIt(code);
+  if (!prettiered.includes("\n")) {
+    return `\u001b[31m${prettiered}\u001b[0m`;
+  }
+  return d/*html*/ `
 
-    \`\`\`${language}
-    ${code}
+    \`\`\`${language === "type" ? "typescript" : language}
+    ${prettiered}
     \`\`\`
 
   `;
+  // return (
+  //   "\n" +
+  //   `${res
+  //     .split("\n")
+  //     .map((i) => `\u001B[34m${i}\u001B[0m`)
+  //     .join("\n")}` +
+  //   "\n"
+  // );
+};
 
 export const inlineCodeBlock = (code: string, language: string) =>
   codeBlock(` ${code} `, language);

@@ -17,7 +17,7 @@ export const identSentences = (message: string): string =>
 
       return d/*html*/ `
         \n
-        →${"\u0020".repeat(2).repeat(whiteSpacesCount)}${line}
+        →${"\u0020".repeat(whiteSpacesCount)}${line}
       `;
     })
     .join("");
@@ -31,15 +31,22 @@ export const identAll = (message: string): string => {
     return message;
   }
   const next = ms.map((lines) => {
-    // 获取 → 后连续的空格数
+    // Get the number of consecutive spaces after →
     const spaces = lines.match(/→\s+/)?.[0].length || 0;
-    // 给除了第一行的每一行都加上空格
+    // Add spaces to every line except the first line
     if (spaces) {
       return lines
         .split("\n")
-        .map((line, index) => {
+        .map((line, index, self) => {
+          if (line.startsWith("```")) {
+            return line;
+          }
           if (index === 0) {
             return line;
+          }
+          // last one
+          if (index === self.length - 1) {
+            return "." + "\u0020".repeat(spaces - 1) + line;
           }
           return `${"\u0020".repeat(spaces)}${line}`;
         })
