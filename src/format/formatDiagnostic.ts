@@ -7,7 +7,7 @@ import fs from "fs";
 
 export function formatDiagnostic(
   diagnostic: Diagnostic,
-  format: (type: string) => string
+  format: (type: string) => string = (type) => type
 ) {
   const newDiagnostic = diagnostic;
 
