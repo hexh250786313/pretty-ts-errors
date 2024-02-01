@@ -10,7 +10,7 @@ import { d } from "../utils";
 const codeBlock = (code: string, language: string) => {
   const prettiered = prettierIt(code);
   if (!prettiered.includes("\n")) {
-    return `\u001b[31m${prettiered}\u001b[0m`;
+    return `\`${prettiered}\``;
   }
   return d/*html*/ `
 

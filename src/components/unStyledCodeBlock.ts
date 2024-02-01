@@ -6,5 +6,5 @@ import { d } from "../utils";
  * For syntax highlighting, use {@link inlineCodeBlock} or {@link multiLineCodeBlock}
  */
 export const unStyledCodeBlock = (content: string) => d/*html*/ `
-  \u001b[31m${content}\u001b[0m
+  \`${content}\`
 `; // @todo
