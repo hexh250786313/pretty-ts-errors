@@ -5,10 +5,10 @@ import { miniLine } from "./miniLine";
 
 // @todo
 export const title = (diagnostic: Diagnostic) => d/*html*/ `
-    \u001b[0m\u001b[31m\u001b[1m⚠ Error \u001b[0m${
+    \u001b[31m⚠ Error \u001b[0m${
       typeof diagnostic.code === "number"
         ? d/*html*/ `
-            \u001b[0m\u001b[31m\u001b[1m(TS${diagnostic.code}) ${errorCodeExplanationLink(diagnostic.code)} | ${errorMessageTranslationLink(diagnostic.message)}\u001b[0m
+            \u001b[31m(TS${diagnostic.code})\u001b[0m
           `
         : ""
     }
@@ -18,15 +18,11 @@ export const title = (diagnostic: Diagnostic) => d/*html*/ `
 
 export const errorCodeExplanationLink = (errorCode: Diagnostic["code"]) =>
   KNOWN_ERROR_NUMBERS.has(errorCode)
-    ? d/*html*/ `
-        \u001b[0m\u001b[31m\u001b[1mhttps://typescript.tv/errors/#ts${errorCode}
-        \u001b[0m`
+    ? `\n- https://typescript.tv/errors/#ts${errorCode}`
     : "";
 
 export const errorMessageTranslationLink = (message: Diagnostic["message"]) => {
   const encodedMessage = compressToEncodedURIComponent(message);
 
-  return d/*html*/ `
-    \u001b[0m\u001b[31m\u001b[1mhttps://ts-error-translator.vercel.app/?error=${encodedMessage}
-    \u001b[0m`;
+  return `\n- https://ts-error-translator.vercel.app/?error=${encodedMessage}`;
 };

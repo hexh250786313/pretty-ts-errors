@@ -1,18 +1,29 @@
 import { Diagnostic } from "vscode-languageserver-types";
-import { title } from "../components";
+import {
+  errorCodeExplanationLink,
+  errorMessageTranslationLink,
+  title,
+} from "../components";
 import { d } from "../utils";
 import { embedSymbolLinks } from "./embedSymbolLinks";
 import { formatDiagnosticMessage } from "./formatDiagnosticMessage";
-import { identSentences } from "./identSentences";
+import { identAll, identSentences } from "./identSentences";
 
 export function formatDiagnostic(
   diagnostic: Diagnostic,
   format: (type: string) => string
 ) {
-  const newDiagnostic = embedSymbolLinks(diagnostic);
+  const newDiagnostic = diagnostic;
 
   return d/*html*/ `
     ${title(diagnostic)}
-    ${formatDiagnosticMessage(identSentences(newDiagnostic.message), format)}
+    ${identAll(
+      formatDiagnosticMessage(identSentences(newDiagnostic.message), format)
+    )}
   `;
 }
+
+//
+// links:
+// ${errorMessageTranslationLink(diagnostic.message)}
+// ${errorCodeExplanationLink(diagnostic.code)}

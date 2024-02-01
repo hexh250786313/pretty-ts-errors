@@ -1,5 +1,5 @@
+import { prettierIt } from "../coc/prettier";
 import { d } from "../utils";
-import { spanBreak } from "./spanBreak";
 
 /**
  * @returns markdown string that will be rendered as a code block (`supportHtml` required)
@@ -9,7 +9,7 @@ import { spanBreak } from "./spanBreak";
  */
 const codeBlock = (code: string, language: string) =>
   language === "type"
-    ? spanBreak(d/*html*/ `\u001b[0m\u001b[31m\u001b[1m${code}\u001b[0m`)
+    ? prettierIt(code)
     : d/*html*/ `
 
     \`\`\`${language}
@@ -19,9 +19,7 @@ const codeBlock = (code: string, language: string) =>
   `;
 
 export const inlineCodeBlock = (code: string, language: string) =>
-  code.includes("\n")
-    ? codeBlock(` ${code} `, language)
-    : codeBlock(` ${code} `, "type");
+  codeBlock(` ${code} `, language);
 
 export const multiLineCodeBlock = (code: string, language: string) => {
   const codeLines = code.split("\n");

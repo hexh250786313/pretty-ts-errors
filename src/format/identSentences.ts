@@ -16,19 +16,36 @@ export const identSentences = (message: string): string =>
       }
 
       return d/*html*/ `
-        </span>
-        <p></p>
-        <span>
-        <table>
-        <tr>
-        <td>
-        ${"&nbsp;".repeat(3).repeat(whiteSpacesCount)}
-        <span class="codicon codicon-indent"></span>
-        &nbsp;&nbsp;
-        </td>
-        <td>${line}</td>
-        </tr>
-        </table>
-    `;
+        \n
+        →${"\u0020".repeat(2).repeat(whiteSpacesCount)}${line}
+      `;
     })
     .join("");
+
+export const identAll = (message: string): string => {
+  const ms = message
+    .split("\n\n")
+    .map((i) => i.trim())
+    .filter((i) => i.startsWith("→"));
+  if (!ms.length) {
+    return message;
+  }
+  const next = ms.map((lines) => {
+    // 获取 → 后连续的空格数
+    const spaces = lines.match(/→\s+/)?.[0].length || 0;
+    // 给除了第一行的每一行都加上空格
+    if (spaces) {
+      return lines
+        .split("\n")
+        .map((line, index) => {
+          if (index === 0) {
+            return line;
+          }
+          return `${"\u0020".repeat(spaces)}${line}`;
+        })
+        .join("\n");
+    }
+    return lines;
+  });
+  return next.join("\n\n");
+};
