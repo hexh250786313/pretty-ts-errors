@@ -27,8 +27,9 @@ program
   .usage(`[ -i | --input ] [ -v | --version ] [ '<Diagnostic[]>' ]\n`)
   .parse(process.argv);
 
-function processInput(rawInput: string) {
+function processInput(_rawInput: string) {
   let diagnostic: Diagnostic;
+  const rawInput = _rawInput.trim();
   try {
     diagnostic = JSON.parse(rawInput);
     try {
@@ -44,10 +45,8 @@ function processInput(rawInput: string) {
 
 export function run() {
   if (inputProvided) {
-    // 处理来自命令行参数的输入
     processInput(input);
   } else {
-    // 从标准输入读取
     process.stdin.setEncoding("utf8");
 
     process.stdin.on("readable", () => {
@@ -58,7 +57,7 @@ export function run() {
     });
 
     process.stdin.on("end", () => {
-      processInput(input.trim());
+      processInput(input);
     });
   }
 }

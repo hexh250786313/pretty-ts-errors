@@ -7,7 +7,7 @@
   "homepage": "https://github.com/hexh250786313/pretty-ts-errors",
   "main": "lib",
   "bin": {
-    "pretty-ts-errors-md": "./bin/pretty-ts-errors-md.js"
+    "pretty-ts-errors-markdown": "./bin/pretty-ts-errors-markdown.js"
   },
   "scripts": {
     "build": "node scripts/build -- --production",
