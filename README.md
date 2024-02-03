@@ -4,12 +4,25 @@ A fork of https://github.com/yoavbls/pretty-ts-errors. It transforms TypeScript 
 
 https://github.com/hexh250786313/pretty-ts-errors-markdown/assets/26080416/e22dfcd6-2ca6-46e9-9abd-cce1cc56e63a
 
-### Usage (CLI)
+## Install
+
+※ Global
+
+```bash
+npm i -g pretty-ts-errors-markdown
+```
+
+※ Local
+
+```bash
+npm i pretty-ts-errors-markdown
+```
+
+## Usage (CLI)
 
 ※ Use inline parameters
 
 ```bash
-npm i -g pretty-ts-errors-markdown
 pretty-ts-errors-markdown -i "{\"range\":{\"start\":{\"line\":6,\"character\":6},\"end\":{\"line\":6,\"character\":7}},\"message\":\"Variable 'a' implicitly has an 'any' type.\",\"code\":7005,\"severity\":1,\"source\":\"tsserver\"}"
 ```
 
@@ -19,7 +32,7 @@ pretty-ts-errors-markdown -i "{\"range\":{\"start\":{\"line\":6,\"character\":6}
 cat ./examples/input.txt | pretty-ts-errors-markdown > ./examples/output.md
 ```
 
-### Usage (Programmatically)
+## Usage (Programmatically)
 
 ```typescript
 import { formatDiagnostic } from "pretty-ts-errors-markdown";
@@ -39,3 +52,7 @@ const diagnostic: Diagnostic = {
 const marked = formatDiagnostic(diagnostic);
 console.log(marked);
 ```
+
+## Credits
+
+Awesome thanks to [yoavbls](https://github.com/yoavbls) and other contributors for the original [pretty-ts-errors](https://github.com/yoavbls/pretty-ts-errors)
