@@ -44,11 +44,11 @@ export const title = (diagnostic: Diagnostic) => {
 
 export const errorCodeExplanationLink = (errorCode: Diagnostic["code"]) =>
   KNOWN_ERROR_NUMBERS.has(errorCode)
-    ? `\n- https://typescript.tv/errors/#ts${errorCode}`
+    ? `\n*@see* — [Code Explanation Link](https://typescript.tv/errors/#ts${errorCode})`
     : "";
 
 export const errorMessageTranslationLink = (message: Diagnostic["message"]) => {
   const encodedMessage = compressToEncodedURIComponent(message);
 
-  return `\n- https://ts-error-translator.vercel.app/?error=${encodedMessage}`;
+  return `\n*@see* — [Message Translation Link](https://ts-error-translator.vercel.app/?error=${encodedMessage})`;
 };
