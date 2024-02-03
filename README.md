@@ -29,6 +29,7 @@ pretty-ts-errors-markdown -i "{\"range\":{\"start\":{\"line\":6,\"character\":6}
 ※ Use standard input
 
 ```bash
+git clone https://github.com/hexh250786313/pretty-ts-errors-markdown && cd pretty-ts-errors-markdown
 cat ./examples/input.txt | pretty-ts-errors-markdown > ./examples/output.md
 ```
 
