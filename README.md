@@ -2,6 +2,8 @@
 
 A fork of https://github.com/yoavbls/pretty-ts-errors. It transforms TypeScript errors into markdown.
 
+https://github.com/hexh250786313/pretty-ts-errors-markdown/assets/26080416/e22dfcd6-2ca6-46e9-9abd-cce1cc56e63a
+
 ### Usage (CLI)
 
 ※ Use inline parameters
