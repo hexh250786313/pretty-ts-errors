@@ -1,4 +1,4 @@
-import { prettierIt } from "../coc/prettier";
+import { prettierIt } from "./prettier";
 import { d } from "../utils";
 
 /**
@@ -19,14 +19,6 @@ const codeBlock = (code: string, language: string) => {
     \`\`\`
 
   `;
-  // return (
-  //   "\n" +
-  //   `${res
-  //     .split("\n")
-  //     .map((i) => `\u001B[34m${i}\u001B[0m`)
-  //     .join("\n")}` +
-  //   "\n"
-  // );
 };
 
 export const inlineCodeBlock = (code: string, language: string) =>

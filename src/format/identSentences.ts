@@ -25,7 +25,7 @@ export const identSentences = (message: string): string =>
     })
     .join("");
 
-export const identAll = (message: string): string => {
+export const markdownIndent = (message: string): string => {
   const ms = message
     .split("\n\n")
     .map((i) => i.trim())

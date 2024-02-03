@@ -7,7 +7,7 @@ import {
 } from "../components";
 import { d } from "../utils";
 import { formatDiagnosticMessage } from "./formatDiagnosticMessage";
-import { identAll, identSentences } from "./identSentences";
+import { markdownIndent, identSentences } from "./identSentences";
 
 export function formatDiagnostic(
   diagnostic: Diagnostic,
@@ -18,7 +18,7 @@ export function formatDiagnostic(
   const result = d/*html*/ `
     ${title(diagnostic)}
     ${miniLine}
-    ${identAll(
+    ${markdownIndent(
       formatDiagnosticMessage(identSentences(newDiagnostic.message), format)
     )}
     ${errorMessageTranslationLink(diagnostic.message)}
