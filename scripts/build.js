@@ -5,6 +5,7 @@ const chokidar = require("chokidar");
 const esbuild = require("esbuild");
 const child_process = require("child_process");
 const rimraf = require("rimraf");
+const commandExists = require('command-exists');
 
 function getAllTsFiles(dir) {
   const files = [];
@@ -32,7 +33,7 @@ async function start() {
     .build({
       entryPoints: getAllTsFiles("src"),
       bundle: false,
-      format: "esm",
+      format: "cjs",
       tsconfig: "./tsconfig.json",
       define: process.argv.includes("--production")
         ? { "process.env.NODE_ENV": '"production"' }
@@ -42,16 +43,16 @@ async function start() {
       mainFields: ["module", "main"],
       platform: "node",
       target: "node14.14",
-      outdir: "node_modules/.esbuild-cache/build",
+      outdir: "node_modules/.esbuild-cache/lib",
       plugins: [],
     })
     .catch((e) => {
       console.error(e);
     })
-    .then(() => {
+    .then(async () => {
       try {
         child_process.execSync(
-          "rsync -avz --delete ./node_modules/.esbuild-cache/build ./"
+          "rsync -avz --delete ./node_modules/.esbuild-cache/lib ./"
         );
         console.log("rsync completed successfully.");
       } catch (error) {
@@ -66,6 +67,7 @@ async function start() {
         return;
       }
       try {
+        await commandExists("yalc");
         child_process.execSync("yalc push");
         console.log("yalc pushed successfully.");
       } catch (e) {}
@@ -73,7 +75,7 @@ async function start() {
 }
 
 function deleteBuild() {
-  return rimraf.sync("./node_modules/.esbuild-cache/build");
+  return rimraf.sync("./node_modules/.esbuild-cache/lib");
 }
 
 deleteBuild();

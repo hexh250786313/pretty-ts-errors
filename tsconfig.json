@@ -5,7 +5,7 @@
     "lib": ["ES2021", "ES2021.String"],
     // "sourceMap": true,
     "rootDir": "src",
-    "outDir": "build",
+    "outDir": "lib",
     "checkJs": true,
     "skipLibCheck": true,
     "emitDeclarationOnly": true,

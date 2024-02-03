@@ -1,40 +1,39 @@
 {
-  "name": "pretty-ts-errors-ansi",
+  "name": "pretty-ts-errors-markdown",
   "displayName": "Pretty TypeScript Errors",
   "publisher": "hexh <250786313@qq.com>",
-  "description": "Make TypeScript errors prettier and more human-readable in VSCode",
+  "description": "A fork of https://github.com/yoavbls/pretty-ts-errors",
   "version": "0.0.1",
-  "icon": "assets/icon.png",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yoavbls/pretty-ts-errors"
+  "homepage": "https://github.com/hexh250786313/pretty-ts-errors",
+  "main": "lib",
+  "bin": {
+    "pretty-ts-errors-md": "./bin/pretty-ts-errors-md.js"
   },
-  "homepage": "https://github.com/yoavbls/pretty-ts-errors",
-  "sponsor": {
-    "url": "https://github.com/sponsors/yoavbls"
-  },
-  "main": "build",
   "scripts": {
     "build": "node scripts/build -- --production",
     "start": "node scripts/build -- --watch"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/lz-string": "^1.5.0",
     "@types/node": "16.x",
     "@types/prettier": "^2.7.3",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
     "chokidar": "^3.5.3",
+    "command-exists": "^1.2.9",
     "esbuild": "^0.18.17",
     "eslint": "^8.46.0",
     "rimraf": "^5.0.5",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vscode-languageserver-types": "^3.17.3"
   },
   "dependencies": {
+    "commander": "^11.1.0",
+    "fs-extra": "^11.2.0",
     "lz-string": "^1.5.0",
     "prettier": "^2.8.8",
     "ts-dedent": "^2.2.0",
-    "vscode-languageserver-types": "^3.17.3",
     "vscode-uri": "^3.0.7"
   }
 }
