@@ -7,4 +7,4 @@ import { d } from "../utils";
  */
 export const unStyledCodeBlock = (content: string) => d/*html*/ `
   \`${content}\`
-`; // @todo
+`;

@@ -6,13 +6,14 @@ import {
 import { addMissingParentheses } from "./addMissingParentheses";
 
 export function formatTypeBlock(
-  prefix: string,
+  _prefix: string,
   type: string,
   format: (type: string) => string
 ) {
+  const prefix = _prefix ? `${_prefix} ` : ""
   // Return a simple code block if it's just a parenthesis
   if (type.match(/^(\[\]|\{\})$/)) {
-    return `${prefix} ${unStyledCodeBlock(type)}`;
+    return `${prefix}${unStyledCodeBlock(type)}`;
   }
 
   if (
@@ -21,15 +22,15 @@ export function formatTypeBlock(
       /^((void|null|undefined|any|number|string|bigint|symbol|readonly|typeof)(\[\])?)$/
     )
   ) {
-    return `${prefix} ${inlineCodeBlock(type, "type")}`;
+    return `${prefix}${inlineCodeBlock(type, "type")}`;
   }
 
   const prettyType = prettifyType(type, format);
 
   if (prettyType.includes("\n")) {
-    return `${prefix}: ${multiLineCodeBlock(prettyType, "type")}`;
+    return `${_prefix}: ${multiLineCodeBlock(prettyType, "type")}`;
   } else {
-    return `${prefix} ${inlineCodeBlock(prettyType, "type")}`;
+    return `${prefix}${inlineCodeBlock(prettyType, "type")}`;
   }
 }
 /**

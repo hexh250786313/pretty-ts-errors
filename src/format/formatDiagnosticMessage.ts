@@ -28,7 +28,7 @@ export const formatDiagnosticMessage = (
         `${pre}${formatTypeBlock("", type, format)}: \n${post
           .split(", ")
           .filter(Boolean)
-          .map((prop: string) => `- ${prop}\n`)
+          .map((prop: string) => `- \`${prop}\`\n`)
           .join("")}`
     )
     // Format type pairs
@@ -97,5 +97,5 @@ export const formatDiagnosticMessage = (
     // Format regular code blocks
     .replaceAll(
       /(?<!.*?")(?:^|\s)['“]((?:(?!:\s*}).)*?)['“](?!\s*:)(?!.*?")/g,
-      (_: string, p1: string) => ` ${unStyledCodeBlock(p1)} `
+      (_: string, p1: string) => ` ${unStyledCodeBlock(p1)}`
     );

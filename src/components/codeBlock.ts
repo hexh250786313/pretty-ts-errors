@@ -22,7 +22,7 @@ const codeBlock = (code: string, language: string) => {
 };
 
 export const inlineCodeBlock = (code: string, language: string) =>
-  codeBlock(` ${code} `, language);
+  codeBlock(`${code}`, language);
 
 export const multiLineCodeBlock = (code: string, language: string) => {
   const codeLines = code.split("\n");

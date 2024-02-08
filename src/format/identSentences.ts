@@ -26,14 +26,20 @@ export const identSentences = (message: string): string =>
     .join("");
 
 export const markdownIndent = (message: string): string => {
-  const ms = message
-    .split("\n\n")
-    .map((i) => i.trim())
-    .filter((i) => i.startsWith("→"));
-  if (!ms.length) {
+  const ms = message.split("\n\n").map((i) => i.trim());
+  if (!ms.filter((i) => i.startsWith("→")).length) {
     return message;
   }
-  const next = ms.map((lines) => {
+  const multiItems = ms.filter((i) => i.startsWith("→\u0020-")).length > 1;
+  const next = ms.map((lines, index) => {
+    if (multiItems && index === 0) {
+      return lines;
+    } else if (!multiItems && index === 0) {
+      lines = `→ - ${lines}`;
+    } else if (!multiItems && index !== 0) {
+      // 每一行加两个空格
+      lines = lines.replace(/→\u0020/gm, "→\u0020\u0020\u0020");
+    }
     // Get the number of consecutive spaces after →
     let spaces = lines.match(/→\s+/)?.[0].length || 0;
     spaces += 2;
@@ -55,10 +61,11 @@ export const markdownIndent = (message: string): string => {
           }
           return `${"\u0020".repeat(spaces)}${line}`;
         })
-        .join("\n");
+        .join("\n")
+        .replace(/^.{2}/gm, "");
     }
     return lines;
   });
-  const final = next.join("\n\n").replace(/^.{2}/gm, "");
+  const final = next.join("\n\n");
   return final;
 };
