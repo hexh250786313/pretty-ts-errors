@@ -3,7 +3,7 @@ import { format } from "prettier";
 export const prettierIt = (code: string) => {
   let res = code;
   try {
-    const prefix = "type __PrettyTsErrorType__ = ";
+    const prefix = "type __PrettyTsErrorType__ =";
     res = prefix + res;
     const temps: string[] = [];
     // For: ... code?: string | /* 1 more */ | undefined; ...
@@ -18,7 +18,7 @@ export const prettierIt = (code: string) => {
     }).trim();
     res = res
       .replace("/**\0*/", () => temps.shift() || "")
-      .replace(new RegExp(`^${prefix}`), "");
+      .replace(new RegExp(`^${prefix}`), "").trim();
     if (res.includes("\n")) {
       return res;
     }

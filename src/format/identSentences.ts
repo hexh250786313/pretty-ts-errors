@@ -1,5 +1,7 @@
 import { d } from "../utils";
 
+const prefix = "\0";
+
 export const identSentences = (message: string): string =>
   message
     .split("\n")
@@ -17,7 +19,7 @@ export const identSentences = (message: string): string =>
 
       return d/*html*/ `
         \n
-        →${"\u0020".repeat(whiteSpacesCount)}${line.replace(
+        ${prefix}${"\u0020".repeat(whiteSpacesCount)}${line.replace(
         /\u0020(?=(\S))/,
         "- "
       )}
@@ -27,21 +29,25 @@ export const identSentences = (message: string): string =>
 
 export const markdownIndent = (message: string): string => {
   const ms = message.split("\n\n").map((i) => i.trim());
-  if (!ms.filter((i) => i.startsWith("→")).length) {
+  if (!ms.filter((i) => i.startsWith(prefix)).length) {
     return message;
   }
-  const multiItems = ms.filter((i) => i.startsWith("→\u0020-")).length > 1;
+  const multiItems =
+    ms.filter((i) => i.startsWith(`${prefix}\u0020-`)).length > 1;
   const next = ms.map((lines, index) => {
     if (multiItems && index === 0) {
       return lines;
     } else if (!multiItems && index === 0) {
-      lines = `→ - ${lines}`;
+      lines = `${prefix} - ${lines}`;
     } else if (!multiItems && index !== 0) {
       // 每一行加两个空格
-      lines = lines.replace(/→\u0020/gm, "→\u0020\u0020\u0020");
+      lines = lines.replace(
+        new RegExp(`${prefix}\\u0020`, "gm"),
+        `${prefix}\u0020\u0020\u0020`
+      );
     }
-    // Get the number of consecutive spaces after →
-    let spaces = lines.match(/→\s+/)?.[0].length || 0;
+    // Get the number of consecutive spaces after \0
+    let spaces = lines.match(new RegExp(`${prefix}\\s+`))?.[0].length || 0;
     spaces += 2;
     // Add spaces to every line except the first line
     if (spaces) {
