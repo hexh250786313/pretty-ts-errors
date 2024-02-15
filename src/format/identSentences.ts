@@ -40,7 +40,7 @@ export const markdownIndent = (message: string): string => {
     } else if (!multiItems && index === 0) {
       lines = `${prefix} - ${lines}`;
     } else if (!multiItems && index !== 0) {
-      // 每一行加两个空格
+      // Add two spaces to each line
       lines = lines.replace(
         new RegExp(`${prefix}\\u0020`, "gm"),
         `${prefix}\u0020\u0020\u0020`
