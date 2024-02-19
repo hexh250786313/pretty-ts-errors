@@ -29,7 +29,7 @@ export const formatDiagnosticMessage = (
           .split(", ")
           .filter(Boolean)
           .map((prop: string) => `- \`${prop}\`\n`)
-          .join("")}`
+          .join("")}\n`
     )
     // Format type pairs
     .replaceAll(
