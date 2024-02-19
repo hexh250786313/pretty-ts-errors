@@ -8,10 +8,11 @@ import {
 import { d } from "../utils";
 import { formatDiagnosticMessage } from "./formatDiagnosticMessage";
 import { markdownIndent, identSentences } from "./identSentences";
+import { prettierIt } from "../components/prettier";
 
 export function formatDiagnostic(
   diagnostic: Diagnostic,
-  format: (type: string) => string = (type) => type
+  format: (type: string) => string = prettierIt
 ) {
   const newDiagnostic = diagnostic;
 
