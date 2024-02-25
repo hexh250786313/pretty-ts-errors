@@ -10,7 +10,7 @@ export function formatTypeBlock(
   type: string,
   format: (type: string) => string
 ) {
-  const prefix = _prefix ? `${_prefix} ` : ""
+  const prefix = _prefix ? `${_prefix} ` : "";
   // Return a simple code block if it's just a parenthesis
   if (type.match(/^(\[\]|\{\})$/)) {
     return `${prefix}${unStyledCodeBlock(type)}`;
@@ -30,7 +30,7 @@ export function formatTypeBlock(
   if (prettyType.includes("\n")) {
     return `${_prefix}: ${multiLineCodeBlock(prettyType, "type")}`;
   } else {
-    return `${prefix}${inlineCodeBlock(prettyType, "type")}`;
+    return ` ${prefix}${inlineCodeBlock(prettyType, "type")} `;
   }
 }
 /**

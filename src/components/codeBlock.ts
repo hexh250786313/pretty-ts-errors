@@ -1,4 +1,3 @@
-import { prettierIt } from "./prettier";
 import { d } from "../utils";
 
 /**
@@ -8,14 +7,13 @@ import { d } from "../utils";
  * VSCode [code](https://github.com/microsoft/vscode/blob/735aff6d962db49423e02c2344e60d418273ae39/src/vs/base/browser/markdownRenderer.ts#L372)
  */
 const codeBlock = (code: string, language: string) => {
-  const prettiered = prettierIt(code);
-  if (!prettiered.includes("\n")) {
-    return `\`${prettiered}\``;
+  if (!code.includes("\n")) {
+    return `\`${code}\``;
   }
   return d/*html*/ `
 
     \`\`\`${language === "type" ? "typescript" : language}
-    ${prettiered}
+    ${code}
     \`\`\`
 
   `;

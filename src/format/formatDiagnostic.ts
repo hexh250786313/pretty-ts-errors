@@ -8,14 +8,17 @@ import {
 import { d } from "../utils";
 import { formatDiagnosticMessage } from "./formatDiagnosticMessage";
 import { markdownIndent, identSentences } from "./identSentences";
+import { prettify } from "./prettify";
+import { format as prettier } from "prettier";
 
 export function formatDiagnostic(
   diagnostic: Diagnostic,
-  format: (type: string) => string = (type) => type
+  format: (type: string) => string = prettify
 ) {
   const newDiagnostic = diagnostic;
 
-  const result = d/*html*/ `
+  const result = prettier(
+    d/*html*/ `
     ${title(diagnostic)}
     ${miniLine}
     ${markdownIndent(
@@ -23,6 +26,10 @@ export function formatDiagnostic(
     )}
     ${errorMessageTranslationLink(diagnostic.message)}
     ${errorCodeExplanationLink(diagnostic.code)}
-  `;
+  `,
+    {
+      parser: "markdown",
+    }
+  );
   return result;
 }
