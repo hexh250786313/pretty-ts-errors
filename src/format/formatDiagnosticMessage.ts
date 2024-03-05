@@ -28,13 +28,8 @@ export const formatDiagnosticMessage = (
         `${pre}${formatTypeBlock("", type, format)}: \n${post
           .split(", ")
           .filter(Boolean)
-          .map(
-            (prop: string, index: number, self: string[]) =>
-              `- \`${prop}\`${
-                index !== self.length - 1 ? "\n" : "\u0020\u0020"
-              }`
-          )
-          .join("")}\n`
+          .map((prop: string) => `- \`${prop}\`\n`)
+          .join("")}`
     )
     // Format type pairs
     .replaceAll(

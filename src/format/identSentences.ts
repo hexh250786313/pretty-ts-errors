@@ -30,7 +30,15 @@ export const identSentences = (message: string): string =>
 export const markdownIndent = (message: string): string => {
   const ms = message.split("\n\n").map((i) => i.trim());
   if (!ms.filter((i) => i.startsWith(prefix)).length) {
-    return message;
+    return message
+      .split("\n")
+      .map((i, index, self) => {
+        if (index === self.length - 1) {
+          return "\n" + i;
+        }
+        return i;
+      })
+      .join("\n");
   }
   const multiItems =
     ms.filter((i) => i.startsWith(`${prefix}\u0020-`)).length > 1;
@@ -60,7 +68,7 @@ export const markdownIndent = (message: string): string => {
           // last line
           if (index === self.length - 1) {
             return (
-              "." +
+              "\n." +
               "\u0020".repeat(spaces - 1) +
               line.trim().replace(/$/gm, "\u0020\u0020\n")
             );
