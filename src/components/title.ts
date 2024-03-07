@@ -38,17 +38,20 @@ export const title = (diagnostic: Diagnostic) => {
   const icon = getDiagnosticIcon(diagnostic);
   const code =
     typeof diagnostic.code === "number" ? `(TS${diagnostic.code})` : "";
-  title = `${icon} ${severity} ${code}`;
+  title = `${icon} ${severity} ${code} ${[
+    errorCodeExplanationLink(diagnostic.code),
+    errorMessageTranslationLink(diagnostic.message),
+  ].join(" ")}`;
   return title;
 };
 
 export const errorCodeExplanationLink = (errorCode: Diagnostic["code"]) =>
   KNOWN_ERROR_NUMBERS.has(errorCode)
-    ? `\n*@see* — [Code Explanation Link](https://typescript.tv/errors/#ts${errorCode})`
+    ? `[🔗](https://typescript.tv/errors/#ts${errorCode})`
     : "";
 
 export const errorMessageTranslationLink = (message: Diagnostic["message"]) => {
   const encodedMessage = compressToEncodedURIComponent(message);
 
-  return `\n*@see* — [Message Translation Link](https://ts-error-translator.vercel.app/?error=${encodedMessage})`;
+  return `[🌐](https://ts-error-translator.vercel.app/?error=${encodedMessage})`;
 };
