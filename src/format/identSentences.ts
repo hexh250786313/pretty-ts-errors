@@ -13,8 +13,10 @@ export const identSentences = (message: string): string =>
       if (whiteSpacesCount === 0) {
         return line;
       }
+      let removed: number;
       if (whiteSpacesCount >= 2) {
-        whiteSpacesCount -= 2;
+        removed = Math.floor((whiteSpacesCount + 1) / 3) + 1;
+        whiteSpacesCount -= removed;
       }
 
       return d/*html*/ `
