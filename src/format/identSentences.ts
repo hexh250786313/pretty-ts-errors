@@ -64,6 +64,7 @@ export const markdownIndent = (message: string): string => {
       return lines
         .split("\n")
         .map((line, index, self) => {
+          line = line.replace(/-\u0020+/, "- ");
           if (index === 0) {
             return line.replace(/$/gm, "\u0020\u0020\n");
           }
