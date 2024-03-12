@@ -1,28 +1,23 @@
 import { Diagnostic } from "vscode-languageserver-types";
 import { URI } from "vscode-uri";
 
-export function embedSymbolLinks(diagnostic: Diagnostic): Diagnostic {
+export function embedSymbolLinks(str: string, diagnostic: Diagnostic): string {
   if (
     !diagnostic?.relatedInformation?.[0]?.message?.includes("is declared here")
   ) {
-    return diagnostic;
+    return str;
   }
   const ref = diagnostic.relatedInformation[0];
   const symbol = ref?.message.match(/(?<symbol>'.*?') is declared here./)
     ?.groups?.symbol!;
 
   if (!symbol) {
-    return diagnostic;
+    return str;
   }
-  return {
-    ...diagnostic,
-    message: diagnostic.message.replaceAll(
-      symbol,
-      `${symbol} <a href="${URI.parse(ref.location.uri).path}#${
-        ref.location.range.start.line + 1
-      },${
-        ref.location.range.start.character + 1
-      }"><span class="codicon codicon-go-to-file" ></span></a>&nbsp;`
-    ),
-  };
+  return str.replaceAll(
+    symbol,
+    `[${symbol} 📄](${URI.parse(ref.location.uri).path}#${
+      ref.location.range.start.line + 1
+    },${ref.location.range.start.character + 1})`
+  );
 }
