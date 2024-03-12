@@ -5,7 +5,7 @@ const chokidar = require("chokidar");
 const esbuild = require("esbuild");
 const child_process = require("child_process");
 const rimraf = require("rimraf");
-const commandExists = require('command-exists');
+const commandExists = require("command-exists");
 
 function getAllTsFiles(dir) {
   const files = [];
@@ -71,6 +71,10 @@ async function start() {
         child_process.execSync("yalc push");
         console.log("yalc pushed successfully.");
       } catch (e) {}
+      // child_process.execSync(
+      //   "cat ./examples/input6.txt | ./bin/pretty-ts-errors-markdown.js > ./examples/output.md"
+      // );
+      // console.log("print debug completed successfully.");
     });
 }
 
