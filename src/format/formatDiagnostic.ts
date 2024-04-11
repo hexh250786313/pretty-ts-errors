@@ -1,5 +1,5 @@
 import { Diagnostic } from "vscode-languageserver-types";
-import { miniLine, title } from "../components";
+import { miniLine, recoverTypescriptCodeBlockTag, title } from "../components";
 import { d } from "../utils";
 import { formatDiagnosticMessage } from "./formatDiagnosticMessage";
 import { markdownIndent, identSentences } from "./identSentences";
@@ -11,20 +11,22 @@ export function formatDiagnostic(
   diagnostic: Diagnostic,
   format: (type: string) => string = prettify
 ) {
-  const result = embedSymbolLinks(
-    prettier(
-      d/*html*/ `
+  const result = recoverTypescriptCodeBlockTag(
+    embedSymbolLinks(
+      prettier(
+        d/*html*/ `
     ${title(diagnostic)}
     ${miniLine}
     ${markdownIndent(
       formatDiagnosticMessage(identSentences(diagnostic.message), format)
     )}
   `,
-      {
-        parser: "markdown",
-      }
-    ),
-    diagnostic
+        {
+          parser: "markdown",
+        }
+      ),
+      diagnostic
+    )
   );
   return result;
 }

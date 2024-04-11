@@ -1,5 +1,12 @@
 import { d } from "../utils";
 
+export const recoverTypescriptCodeBlockTag = (code: string) =>
+  code.replace(specialTypescriptCodeBlockTag, typescriptCodeBlockTag);
+
+/** Prevent prettier from formatting special code block tags */
+export const specialTypescriptCodeBlockTag = "\0__typescript__\0";
+export const typescriptCodeBlockTag = "typescript";
+
 /**
  * @returns markdown string that will be rendered as a code block (`supportHtml` required)
  * We're using codicon here since it's the only thing that can be `inline-block`
@@ -12,7 +19,7 @@ const codeBlock = (code: string, language: string) => {
   }
   return d/*html*/ `
 
-    \`\`\`${language === "type" ? "typescript" : language}
+    \`\`\`${language === "type" ? specialTypescriptCodeBlockTag : language}
     ${code}
     \`\`\`
 
