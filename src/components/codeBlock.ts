@@ -1,10 +1,10 @@
 import { d } from "../utils";
 
 export const recoverTypescriptCodeBlockTag = (code: string) =>
-  code.replace(specialTypescriptCodeBlockTag, typescriptCodeBlockTag);
+  code.replaceAll(specialTypescriptCodeBlockTag, typescriptCodeBlockTag);
 
 /** Prevent prettier from formatting special code block tags */
-export const specialTypescriptCodeBlockTag = "\0__typescript__\0";
+export const specialTypescriptCodeBlockTag = "@@__typescript__@@";
 export const typescriptCodeBlockTag = "typescript";
 
 /**
