@@ -16,7 +16,7 @@ export function embedSymbolLinks(str: string, diagnostic: Diagnostic): string {
   }
   return str.replaceAll(
     symbol,
-    `[${symbol} 📄](${URI.parse(ref.location.uri).path}#${
+    `[${symbol} 📄](${URI.parse(ref.location.uri).fsPath}#${
       ref.location.range.start.line + 1
     },${ref.location.range.start.character + 1})`
   );
