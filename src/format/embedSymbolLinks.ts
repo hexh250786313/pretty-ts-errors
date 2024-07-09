@@ -8,15 +8,15 @@ export function embedSymbolLinks(str: string, diagnostic: Diagnostic): string {
     return str;
   }
   const ref = diagnostic.relatedInformation[0];
-  const symbol = ref?.message.match(/(?<symbol>'.*?') is declared here./)
-    ?.groups?.symbol!;
-
+  const _symbol = ref?.message.match(/(?<symbol>'.*?') is declared here./)
+    ?.groups?.symbol;
+  const symbol = _symbol?.replaceAll(/(^')|('$)/g, "`");
   if (!symbol) {
     return str;
   }
   return str.replaceAll(
     symbol,
-    `[${symbol} 📄](${URI.parse(ref.location.uri).fsPath}#${
+    `[${_symbol} 📄](${URI.parse(ref.location.uri).fsPath}#${
       ref.location.range.start.line + 1
     },${ref.location.range.start.character + 1})`
   );
