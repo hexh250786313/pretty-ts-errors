@@ -1,0 +1,1 @@
+{"range":{"start":{"line":74,"character":32},"end":{"line":74,"character":52}},"message":"Exported variable 'uploadRouter' has or is using name 'Uploader' from external module \"/Users/theo/Code/Work/filething/packages/uploadthing/dist/types-dbaf1b46\" but cannot be named.","code":2769,"severity":1,"source":"tsserver","relatedInformation":[]}

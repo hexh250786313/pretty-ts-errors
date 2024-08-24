@@ -1,0 +1,1 @@
+{"range":{"start":{"line":74,"character":32},"end":{"line":74,"character":52}},"message":"Property 'user' is missing in type '{ person: { username: string; email: string; }; }' but required in type '{ user: { name: string; email: `${string}@${string}.${string}`; age: number; }; }'.","code":2769,"severity":1,"source":"tsserver","relatedInformation":[]}
