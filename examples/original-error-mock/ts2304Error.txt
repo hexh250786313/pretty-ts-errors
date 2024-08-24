@@ -1,0 +1,1 @@
+{"range":{"start":{"line":74,"character":32},"end":{"line":74,"character":52}},"message":"Cannot find name 'varname'.","code":2769,"severity":1,"source":"tsserver","relatedInformation":[]}

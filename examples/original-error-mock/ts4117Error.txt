@@ -1,0 +1,1 @@
+{"range":{"start":{"line":74,"character":32},"end":{"line":74,"character":52}},"message":"This member cannot have an 'override' modifier because it is not declared in the base class 'A<T[\"nested\"]>'. Did you mean 'testA'?","code":2769,"severity":1,"source":"tsserver","relatedInformation":[]}
