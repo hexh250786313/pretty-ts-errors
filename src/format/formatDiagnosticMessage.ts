@@ -96,6 +96,12 @@ export const formatDiagnosticMessage = (
     )
     // Format regular code blocks
     .replaceAll(
-      /(?<!\w)'((?:(?!["]).)*?)'(?!\w)/g,
+      // @todo(pretty-ts-errors-markdown): The original regex matches all content in single quotes, causing even the
+      // content in (inline) code blocks to be matched. This is ok for editors that render html, but for markdown
+      // rendering, it will encounter the situation where another (inline) code block is nested in the (inline) code
+      // block. Therefore, the original regex is modified here to not match single quotes in (inline) code blocks.
+      // For multi-line code blocks, the situation is much more complicated, so it is not considered for the time being.
+      // /(?<!\w)'((?:(?!["]).)*?)'(?!\w)/g,
+      /(?<!\w)'((?:(?!["`]).)*?)'(?!\w)(?=(?:[^`]*`[^`]*`)*[^`]*$)/g,
       (_: string, p1: string) => ` ${unStyledCodeBlock(p1)}`
     );
